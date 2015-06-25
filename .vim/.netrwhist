@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/Users/hashamali/test'
+let g:netrw_dirhist_2='/Users/hashamali/devvm/conf'
+let g:netrw_dirhist_3='/Users/hashamali/vm/scripts/install'
+let g:netrw_dirhist_4='/Users/hashamali/vm/adserver-sandbox'
+let g:netrw_dirhist_5='/Users/hashamali/vm/adserver-sandbox/conf'
+let g:netrw_dirhist_6='/Users/hashamali/git/experiment-prototype/experiment.thrift'
+let g:netrw_dirhist_7='/Users/hashamali/git/adrel_etl/playbook'
+let g:netrw_dirhist_8='/etc'
+let g:netrw_dirhist_9='/Users/hashamali'
