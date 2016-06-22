@@ -3,25 +3,42 @@ export GOPATH=/Users/hashamali/gocode
 export PATH=/Users/hashamali/bin:$PATH
 export PATH=/usr/include:$PATH
 export PATH=/opt/local/bin:$PATH
+export HAXEPATH=/usr/local/bin/
 
-# IP forwarding setup
-ipforwarding() {
-	for i in {9000..9100}; do
-		VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port$i,tcp,,$i,,$i";
-		VBoxManage modifyvm "boot2docker-vm" --natpf1 "udp-port$i,udp,,$i,,$i";
-	done
+# tmux management
+work() {
+	attachtmux "work"
 }
 
-# boot2docker alias
-alias b2d=boot2docker
+home() {
+	attachtmux "home"
+}
 
-# docker-compose alias
+attachtmux() {
+	tmux attach -t $1 || tmux new -s $1
+}
+
+# helpful commands
+function up {
+    if [[ "$#" < 1 ]] ; then
+        cd ..
+    else
+        CDSTR=""
+        for i in {1..$1} ; do
+            CDSTR="../$CDSTR"
+        done
+        cd $CDSTR
+    fi
+}
+
+# docker management
 alias compose=docker-compose
+alias machine=docker-machine
 
 # extract git branch info
 parse_git_branch() {
   git_branch=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
-  if [ $git_branch ]; then
+  if [ $git_branch ] && [ $git_branch != *"bash"* ]; then
     echo "[$git_branch]"
   fi
 }
@@ -34,7 +51,7 @@ CLEAR="\[\033[0m\]"
 
 # update cmdline to include time, dir, git info
 function update_cmdline() {
-	export PS1="$RED\$(date +%H:%M) $YELLOW\w$GREEN $(parse_git_branch) $CLEAR $ "
+	export PS1="$RED\$(date +%H:%M) $YELLOW\w$GREEN $(parse_git_branch) $CLEAR δ "
 }
 
 function gch {
