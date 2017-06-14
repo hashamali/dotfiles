@@ -13,11 +13,12 @@ Plugin 'sjl/gundo.vim'
 Plugin 'rking/ag.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'szw/vim-maximizer'
-Plugin 'OmniSharp/omnisharp-vim'
 Plugin 'tpope/vim-dispatch'
 Plugin 'scrooloose/syntastic'
 Plugin 'OrangeT/vim-csharp'
-
+Plugin 'leafgarland/typescript-vim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'lu-ren/SerialExperimentsLain'
 
 call vundle#end()
 filetype plugin indent on
@@ -26,14 +27,11 @@ filetype plugin indent on
 " enable syntax processing and set color scheme
 syntax enable
 set background=dark
-colorscheme solarized
+colorscheme SerialExperimentsLain
 
 
-" set tabs to 4 spaces
-set tabstop=4
-set softtabstop=4
-set expandtab
-
+" set tabs to 2 spaces
+set tabstop=2 softtabstop=2 expandtab shiftwidth=2 smarttab
 
 " show line number
 set number
@@ -64,10 +62,6 @@ set incsearch
 set hlsearch
 
 
-" disable last search highlighted result with <space>
-nnoremap <leader><backspace> :nohlsearch<CR>
-
-
 " configure folding
 set foldenable
 set foldlevelstart=10
@@ -79,22 +73,16 @@ nnoremap <space> za
 " setup up movement
 nnoremap j gj
 nnoremap k gk
-nnoremap B ^
-nnoremap E $
+nnoremap <C-j> <C-f> 
+nnoremap <C-k> <C-b>
+noremap <C-h> ^
 nnoremap ^ <nop>
+nnoremap <C-l> $
 nnoremap $ <nop>
-
-
-" select last inserted text
-nnoremap gV `[v`]
-
-
-" remap leader to ,
-let mapleader=","
-
-
-" remap escape to jk
-inoremap jk <esc>
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
 
 
 " pane splitting
@@ -121,8 +109,7 @@ nnoremap <leader>et :vsp ~/.tmux.comf<CR>
 nnoremap <leader>st :source ~/.tmux.conf<CR>
 
 
-" shortcut for editing .bash_profile
-nnoremap <leader>eb :vsp ~/.bash_profile<CR>
+" shortcut for editing .bash_profile nnoremap <leader>eb :vsp ~/.bash_profile<CR>
 nnoremap <leader>sb :source ~/.bash_profile<CR>
 
 
@@ -139,7 +126,11 @@ let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  'node_modules\v[\/]\.(git|hg|svn|atom)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
 
 " nerdtree settings and autoclose it if it's the only pane open
 nnoremap t :NERDTreeToggle<CR>
@@ -168,30 +159,6 @@ augroup configgroup
     autocmd BufEnter *.sh setlocal softtabstop=2
     autocmd BufEnter *.sh setlocal shiftwidth=2
 augroup END
-
-
-" omnisharp
-let g:OmniSharp_selector_ui = 'ctrlp'
-set completeopt=longest,menuone,preview
-set splitbelow
-let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
-augroup omnisharp_commands
-    autocmd!
-    autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
-    autocmd FileType cs nnoremap <leader>ob :wa!<cr>:OmniSharpBuildAsync<cr>
-    autocmd BufEnter,InsertLeave *.cs SyntasticCheck
-    autocmd BufWritePost *.cs call OmniSharp#AddToProject()
-    autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
-    autocmd FileType cs nnoremap od :OmniSharpGotoDefinition<cr>
-    autocmd FileType cs nnoremap oi :OmniSharpFindImplementations<cr>
-    autocmd FileType cs nnoremap ot :OmniSharpFindType<cr>
-    autocmd FileType cs nnoremap os :OmniSharpFindSymbol<cr>
-    autocmd FileType cs nnoremap ou :OmniSharpFindUsages<cr>
-    autocmd FileType cs nnoremap om :OmniSharpFindMembers<cr>
-    autocmd FileType cs nnoremap ok :OmniSharpNavigateUp<cr>
-    autocmd FileType cs nnoremap oj :OmniSharpNavigateDown<cr>
-augroup END
-let g:OmniSharp_want_snippet=1
 
 
 " auto backup

@@ -1,9 +1,14 @@
+# set java env var
 export JAVA_HOME=$(/usr/libexec/java_home)
-export GOPATH=/Users/hashamali/gocode
-export PATH=/Users/hashamali/bin:$PATH
-export PATH=/usr/include:$PATH
-export PATH=/opt/local/bin:$PATH
-export HAXEPATH=/usr/local/bin/
+
+# get ip alias
+alias getip="ipconfig getifaddr en0"
+
+# lol
+eval $(thefuck --alias)
+
+# import privates
+. "${BASH_SOURCE%/*}/.bash_private"
 
 # tmux management
 work() {
@@ -19,7 +24,7 @@ attachtmux() {
 }
 
 # helpful commands
-function up {
+up() {
     if [[ "$#" < 1 ]] ; then
         cd ..
     else
@@ -34,6 +39,14 @@ function up {
 # docker management
 alias compose=docker-compose
 alias machine=docker-machine
+
+# git
+alias gs='git status'
+alias gc='git commit'
+alias gd='git diff'
+alias gco='git checkout'
+alias gpl='git pull'
+alias gps='git push'
 
 # extract git branch info
 parse_git_branch() {
@@ -55,11 +68,15 @@ function update_cmdline() {
 }
 
 function gch {
-        git checkout $1 && gsu
+  git checkout $1 && gsu
 }
 
 function gsu {
-        git submodule init && git submodule update
+  git submodule init && git submodule update
+}
+
+function bfg {
+  java -jar /usr/local/bin/bfg-1.12.12.jar
 }
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
