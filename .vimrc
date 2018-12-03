@@ -19,6 +19,8 @@ Plugin 'OrangeT/vim-csharp'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'lu-ren/SerialExperimentsLain'
+Plugin 'elixir-editors/vim-elixir'
+Plugin 'jdonaldson/vaxe'
 
 call vundle#end()
 filetype plugin indent on
@@ -29,6 +31,8 @@ syntax enable
 set background=dark
 colorscheme SerialExperimentsLain
 
+" set no sticky escape
+set ttimeoutlen=5
 
 " set tabs to 2 spaces
 set tabstop=2 softtabstop=2 expandtab shiftwidth=2 smarttab
@@ -122,21 +126,23 @@ nnoremap <leader>s :Ag
 
 
 " ctrlp settings
+" set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.png
 let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
-let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+let g:ctrlp_user_command = 'ag %s -p ~/.ignore -l --nocolor --hidden -g ""'
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  'node_modules\v[\/]\.(git|hg|svn|atom)$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ 'link': 'some_bad_symbolic_links',
+  \ 'dir':  '\v[\/]\.(env|git|hg|svn|node_module|atom)$',
+  \ 'file': '\v\.(exe|so|dll|png|meta|log|pyc)$',
   \ }
+let g:ctrlp_split_window = 0
 
 " nerdtree settings and autoclose it if it's the only pane open
 nnoremap t :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDTreeDirArrowExpandable = '▶'
 let g:NERDTreeDirArrowCollapsible = '▼'
+let NERDTreeIgnore = ['\.pyc$']
 
 
 " in tmux, use vertical cursor
@@ -178,4 +184,3 @@ function! <SID>StripTrailingWhitespaces()
     let @/=_s
     call cursor(l, c)
 endfunction
-
