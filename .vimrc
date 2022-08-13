@@ -7,7 +7,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'altercation/Vim-colors-solarized'
 Plugin 'scrooloose/nerdtree'
 Plugin 'sjl/gundo.vim'
 Plugin 'rking/ag.vim'
@@ -18,18 +17,17 @@ Plugin 'scrooloose/syntastic'
 Plugin 'OrangeT/vim-csharp'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'davidhalter/jedi-vim'
-Plugin 'lu-ren/SerialExperimentsLain'
 Plugin 'elixir-editors/vim-elixir'
-Plugin 'jdonaldson/vaxe'
+Plugin 'cocopon/iceberg.vim'
 
 call vundle#end()
 filetype plugin indent on
 
 
 " enable syntax processing and set color scheme
-syntax enable
 set background=dark
-colorscheme SerialExperimentsLain
+colorscheme iceberg 
+syntax enable
 
 " set no sticky escape
 set ttimeoutlen=5
